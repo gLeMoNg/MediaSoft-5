@@ -6,17 +6,17 @@ $port = '5432';
 $user = 'postgres';
 $password = 'admin';
 
-$conn = new PDO("pgsql:host={$host};port={$port};dbname={$dbname};user={$user};password={$password}");
+$connect = new PDO("pgsql:host={$host};port={$port};dbname={$dbname};user={$user};password={$password}");
 
 function getUsers (): array{
-    global $conn;
-    return $conn->query('select * from users')->fetchAll(PDO::FETCH_ASSOC);
+    global $connect;
+    return $connect->query('select * from users')->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function q($post) {
 
-    global $conn;
-    $st = $conn->prepare("insert into users (name, email, age, work_id) values (?, ?, ?, ?)");
+    global $connect;
+    $st = $connect->prepare("insert into users (name, email, age, work_id) values (?, ?, ?, ?)");
 
     $st->execute([
         $post['name'],
